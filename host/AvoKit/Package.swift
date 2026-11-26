@@ -25,9 +25,8 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [.macOS(.v15)],
     products: [
-        // The one product the Xcode targets link: a single dynamic framework,
-        // so the app, the daemon and the Window Host never carry two copies
-        // of the same classes (which breaks NSXPC class checks).
+        // The app, daemon and Window Host share one dynamic framework so
+        // each process has one copy of the classes NSXPC checks.
         .library(name: "AvoHostKit", type: .dynamic, targets: [
             "AvoKit", "AvoProtocol", "AvoPackages", "AvoIO", "AvoADB", "AvoShared", "AvoShimKit", "AvoDaemonCore",
         ]),

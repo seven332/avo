@@ -62,7 +62,7 @@
 		6A099405637B410C4B19CFE8 /* StorageLocationViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 926265DAA0B720EAF8BF3858 /* StorageLocationViews.swift */; };
 		6D9ACB9B75426991EF98DB74 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96ED77A3C55350AFFABBD5A8 /* main.swift */; };
 		70E4B99BBAAA5F9FADD10C34 /* mona-sans.woff2 in Resources */ = {isa = PBXBuildFile; fileRef = 8B51354EC56633B01822C753 /* mona-sans.woff2 */; };
-		736A59C7F9BD129ACC6395F7 /* AvoHostKit in Frameworks */ = {isa = PBXBuildFile; productRef = B4FF4D9F0E4B7565B6EA4F98 /* AvoHostKit */; };
+		736A59C7F9BD129ACC6395F7 /* AvoKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5300B624E320C83F60293D77 /* AvoKit */; };
 		7631DB1ECEE4CF97D73AE738 /* GoogleAppsViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C757D8A5FB2A2B753C155E /* GoogleAppsViews.swift */; };
 		79569C517CFA4575CA0927F8 /* IconPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = E37F0548829F26D1E6A7E140 /* IconPalette.swift */; };
 		7A075CAF7513581AA30E117D /* MetalFX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 955B641751C45E99B315D024 /* MetalFX.framework */; };
@@ -388,7 +388,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				736A59C7F9BD129ACC6395F7 /* AvoHostKit in Frameworks */,
+				736A59C7F9BD129ACC6395F7 /* AvoKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -687,7 +687,7 @@
 			);
 			name = avoctl;
 			packageProductDependencies = (
-				B4FF4D9F0E4B7565B6EA4F98 /* AvoHostKit */,
+				5300B624E320C83F60293D77 /* AvoKit */,
 			);
 			productName = avoctl;
 			productReference = C07D584FB71811F8CF054BA0 /* avoctl */;
@@ -1436,11 +1436,11 @@
 			package = 1DB346538E7CBD6618097450 /* XCRemoteSwiftPackageReference "Sparkle" */;
 			productName = Sparkle;
 		};
-		957B5B66D0F5E689DE4D838D /* AvoHostKit */ = {
+		5300B624E320C83F60293D77 /* AvoKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = AvoHostKit;
+			productName = AvoKit;
 		};
-		B4FF4D9F0E4B7565B6EA4F98 /* AvoHostKit */ = {
+		957B5B66D0F5E689DE4D838D /* AvoHostKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AvoHostKit;
 		};

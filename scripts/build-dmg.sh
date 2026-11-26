@@ -161,6 +161,9 @@ sign_as "$APP/Contents/MacOS/avoctl" com.avodroid.avoctl
 sign_as "$APP/Contents/MacOS/avo-vmm" com.avodroid.avo-vmm
 sign "$APP" app
 codesign --verify --deep --strict "$APP"
+# Exercise the signed CLI's library loading. With no arguments it prints
+# usage and exits before connecting to a daemon.
+"$APP/Contents/MacOS/avoctl" > /dev/null
 echo "signed: $(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$APP/Contents/Info.plist") ($(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$APP/Contents/Info.plist"))"
 
 # Apple's notary service, waiting for its verdict; on a rejection its log

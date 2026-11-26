@@ -261,9 +261,10 @@ targets:
     platform: macOS
     sources: [avoctl]
     dependencies:
+      # Link AvoKit into the CLI so an ad hoc Release can start with library
+      # validation enabled.
       - package: AvoKit
-        product: AvoHostKit
-        embed: false
+        product: AvoKit
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: $(AVO_BUNDLE_ID_PREFIX).avoctl

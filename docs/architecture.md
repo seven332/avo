@@ -21,10 +21,11 @@ running — the daemon always is. The spec lists the Menu Bar Item as its own
 component; it lives in the same process because its state is the daemon's
 state and it should stay visible while Android runs in the background.
 
-All Swift code shared between targets is one dynamic framework,
+The Control Panel, daemon and Window Host share one dynamic framework,
 `AvoHostKit.framework` (every module of the `AvoKit` package). Linking the
 package products separately produced two copies of the same classes in one
-process, which breaks NSXPC class checks.
+process, which breaks NSXPC class checks. The standalone `avoctl` process
+links the `AvoKit` product into its executable.
 
 What Avo shares with Avo Hub is a package of its own,
 [avo_kit](https://github.com/nizwar/avo_kit), a submodule at

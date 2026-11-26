@@ -11,17 +11,25 @@ Config/         Shared build settings (Base.xcconfig; optional Local.xcconfig)
 project.yml     XcodeGen spec for Avo.xcodeproj
 ```
 
-All Xcode targets link one dynamic framework, `AvoHostKit` (every module of
-the AvoKit package), embedded once in `Avo.app/Contents/Frameworks`.
+The Control Panel, daemon and Window Host share `AvoHostKit.framework` in
+`Avo.app/Contents/Frameworks`. The standalone `avoctl` links the `AvoKit`
+product into its executable so a locally signed Release can load it.
 
 ## Build and test
 
+Run these commands from the repository root.
+
 ```sh
-xcodegen generate                        # after changing project.yml
-xcodebuild -project Avo.xcodeproj -scheme Avo build
-cd AvoKit && swift test                  # core tests, no Xcode project needed
-cd ../vendor/avo_kit && swift test       # the key mapping and haze UI (avo_kit)
+git submodule update --init
+make build       # generates the Xcode project and builds Debug
+make test        # tests AvoKit and the shared avo_kit package
 ```
+
+For a first build with the bundled GPU and Bluetooth components, run
+`make gfxstream` and `scripts/build-bluetooth.sh` before `make build`.
+For source debugging, open `host/Avo.xcodeproj`, select the **Avo**
+scheme and press ⌘R. When switching from an installed copy, first follow
+[Running during development](#running-during-development) to release its daemon.
 
 To sign with your team, create `Config/Local.xcconfig` (ignored by git):
 
@@ -35,10 +43,29 @@ automatically.
 
 ## Running during development
 
-A normal launch of Avo.app registers the daemon as a LaunchAgent with
-`SMAppService`, which adds a Login Item for that build. To try a build without
-registering it, run the daemon with `launchctl` and tell the Control Panel to
-skip registration:
+The installed and Debug apps share one daemon Mach service. When switching
+copies, stop Android in the active copy, quit the Control Panel, and choose
+**Quit Avo** from the menu bar item. Wait for launchd to release the service
+before opening the other copy.
+
+```sh
+agent="gui/$(id -u)/com.avodroid.daemon.agent"
+if launchctl print "$agent" >/dev/null 2>&1; then
+    launchctl bootout "$agent"
+    while launchctl print "$agent" >/dev/null 2>&1 || pgrep -u "$(id -u)" -x AvoDaemon >/dev/null; do
+        sleep 0.25
+    done
+fi
+APP="$PWD/build/DerivedData/Build/Products/Debug/Avo.app"
+open "$APP"
+# Once the Control Panel is connected, check the daemon.
+"$APP/Contents/MacOS/avoctl" status
+```
+
+A normal launch sets up `~/Library/LaunchAgents/com.avodroid.daemon.agent.plist`
+for that copy. To switch back, repeat the steps with `APP=/Applications/Avo.app`.
+To try a temporary agent, start with the normal agent unloaded and run the
+following commands.
 
 ```sh
 APP=/path/to/DerivedData/Build/Products/Debug/Avo.app
